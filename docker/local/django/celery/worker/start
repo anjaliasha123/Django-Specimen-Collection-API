@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+# TODO: map to right celery file inhs.celery1
+exec watchfiles celery.__main__.main --args '-A inhs.celery worker -l INFO'

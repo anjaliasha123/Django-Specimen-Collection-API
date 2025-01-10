@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o pipefail
+
+set -o nounset
+
+>&2 echo "Migrating the tables"
+python manage.py migrate --no-input
+
+>&2 echo "Collecting static files"
+python manage.py collectstatic --no-input
+
+>&2 echo "Importing CSV data into Postgres db..."
+python manage.py import_csv
+
+exec python manage.py runserver 0.0.0.0:8000

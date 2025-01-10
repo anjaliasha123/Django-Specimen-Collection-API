@@ -1,0 +1,12 @@
+#!/bin/bash
+
+set -o errexit
+set -o nounset
+
+# TODO: map to right celery file inhs.celery1
+
+# start flower to watch for email requests -> 
+#TODO: remove this in production
+exec watchfiles celery.__main__.main \
+    --args \
+    "-A inhs.celery -b \"${CELERY_BROKER}\" flower --basic_auth=\"${CELERY_FLOWER_USER}:${CELERY_FLOWER_PASSWORD}\""
