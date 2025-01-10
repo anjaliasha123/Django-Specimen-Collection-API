@@ -56,6 +56,10 @@ LOCAL_APPS = [
     'core_apps.common',
     'core_apps.users',
     'core_apps.herp',
+    'core_apps.research_article',
+    'core_apps.likes',
+    'core_apps.reviews',
+    'core_apps.impacts',
     'core',
 ]
 
