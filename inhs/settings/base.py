@@ -37,12 +37,6 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    "rest_framework.authtoken",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
-    "dj_rest_auth",
-    "dj_rest_auth.registration",
 ]
 THIRD_PARTY_APPS = [
     'rest_framework',
@@ -50,6 +44,13 @@ THIRD_PARTY_APPS = [
     'drf_yasg',
     'corsheaders',
     "djcelery_email",
+    "taggit",
+    "rest_framework.authtoken",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
 ]
 LOCAL_APPS = [
     'core_apps.profiles',
@@ -57,9 +58,7 @@ LOCAL_APPS = [
     'core_apps.users',
     'core_apps.herp',
     'core_apps.research_article',
-    'core_apps.likes',
     'core_apps.reviews',
-    'core_apps.impacts',
     'core',
 ]
 

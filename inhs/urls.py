@@ -48,6 +48,7 @@ urlpatterns = [
         name="password_reset_confirm",
     ),
     path("api/v1/profiles/", include("core_apps.profiles.urls")),
+    path("api/v1/articles/", include("core_apps.research_article.urls")),
 ]
 
 admin.site.site_header = "INHS API Admin"
