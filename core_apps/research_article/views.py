@@ -6,7 +6,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, permissions, status
-from rest_framework.parsers import FormParser, MultiPartParser
+from rest_framework.parsers import FormParser, MultiPartParser, JSONParser
 from rest_framework.response import Response
 
 from .filters import ArticleFilter
@@ -47,7 +47,7 @@ class ArticleRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
     lookup_field = "id"
     renderer_classes = [ArticleJSONRenderer]
-    parser_classes = [MultiPartParser, FormParser]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def perform_update(self, serializer):
         serializer.save(author=self.request.user)
@@ -57,9 +57,10 @@ class ArticleRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
             instance = self.get_object()
         except Http404:
             return Response(status=status.HTTP_404_NOT_FOUND)
-
+        data = request.user
         serializer = self.get_serializer(instance)
-
+        # TODO: replace IP with user email id
+        logger.info(f'{data.email} is the requested user')
         viewer_ip = request.META.get("REMOTE_ADDR", None)
         ArticleView.record_view(
             article=instance, user=request.user, viewer_ip=viewer_ip

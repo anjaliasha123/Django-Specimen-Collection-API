@@ -47,14 +47,6 @@ class Article(TimeStampedModel):
     def view_count(self):
         return self.article_views.count()
 
-    # def average_impact(self):
-    #     likes = self.likes.all()
-
-    #     if likes.count() > 0:
-    #         total_likes = sum(rating.rating for rating in ratings)
-    #         average_rating = total_rating / ratings.count()
-    #         return round(average_rating, 2)
-    #     return None
 
 """
 Model for research article views

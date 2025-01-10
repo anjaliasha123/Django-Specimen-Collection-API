@@ -3,6 +3,7 @@ from rest_framework import serializers
 from core_apps.herp.models import SpeciesLocation
 from core_apps.research_article.models import Article, ArticleView, Like
 from core_apps.profiles.serializers import ProfileSerializer
+from core_apps.reviews.serializers import ResponseSerializer
 
 
 class TagListField(serializers.Field):
@@ -40,8 +41,8 @@ class ArticleSerializer(serializers.ModelSerializer):
         write_only=True,
         default=1
     )
-    # responses = ResponseSerializer(many=True, read_only=True)
-    # responses_count = serializers.IntegerField(source="responses.count", read_only=True)
+    responses = ResponseSerializer(many=True, read_only=True)
+    responses_count = serializers.IntegerField(source="responses.count", read_only=True)
     created_at = serializers.SerializerMethodField()
     updated_at = serializers.SerializerMethodField()
 
@@ -100,8 +101,8 @@ class ArticleSerializer(serializers.ModelSerializer):
             "likes_count",
             "specimen",
             "specimen_id",
-            # "responses",
-            # "responses_count",
+            "responses",
+            "responses_count",
             "created_at",
             "updated_at",
         ]
