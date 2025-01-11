@@ -1,7 +1,16 @@
+from decimal import Decimal
 from rest_framework import serializers
 from .models import SpeciesLocation
 
+class DecimalToFloatField(serializers.DecimalField):
+    def to_representation(self, value):
+        if isinstance(value, Decimal):
+            return float(value)
+        return super().to_representation(value)
+
 class SpeciesLocationSerializer(serializers.ModelSerializer):
+    decimal_latitude = DecimalToFloatField(max_digits=10, decimal_places=2)
+    decimal_longitude = DecimalToFloatField(max_digits=10, decimal_places=2)
     class Meta:
         model = SpeciesLocation
         fields = [

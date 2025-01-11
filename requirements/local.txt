@@ -2,3 +2,7 @@
 
 psycopg2
 watchfiles==0.18.1
+
+pytest-django==4.5.2
+pytest-factoryboy==2.5.1
+Faker==18.3.1

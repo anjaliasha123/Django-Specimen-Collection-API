@@ -21,36 +21,27 @@ class Command(BaseCommand):
         )
         
         cursor = conn.cursor()
-
-        # Define the COPY SQL statement
-        copy_sql = f"""
-        COPY species_locations(species_id, kingdom, phylum, phylum_class, family, scientific_name, genus, country, state_province, decimal_latitude, decimal_longitude) 
-        FROM '{csv_path}' DELIMITER ',' CSV HEADER;
-        """
         
         # Execute the COPY command
         try:
-            cursor.execute(copy_sql)
-            conn.commit()
-            self.stdout.write(self.style.SUCCESS('Successfully imported CSV data into the table.'))
+            # check if table is already populated
+            cursor.execute("SELECT COUNT(*) FROM species_locations;")
+            count = cursor.fetchone()[0]
+            if count > 0:
+                self.stdout.write(self.style.WARNING('Table already contains data. Skipping CSV import.'))
+            
+            else:
+                copy_sql = f"""
+                COPY species_locations(species_id, kingdom, phylum, phylum_class, family, scientific_name, genus, country, state_province, decimal_latitude, decimal_longitude) 
+                FROM '{csv_path}' DELIMITER ',' CSV HEADER;
+                """
+                cursor.execute(copy_sql)
+                conn.commit()
+                self.stdout.write(self.style.SUCCESS('Successfully imported CSV data into the table.'))
+
         except Exception as e:
             conn.rollback()
             self.stdout.write(self.style.ERROR(f'Error importing CSV: {e}'))
         finally:
             cursor.close()
             conn.close()
-        # Define the psql command for client-side \copy
-        # psql_command = f"""
-        # psql -U {settings.DATABASES['default']['USER']} \
-        #     -d {settings.DATABASES['default']['NAME']} \
-        #     -h {settings.DATABASES['default']['HOST']} \
-        #     -p {settings.DATABASES['default']['PORT']} \
-        #     -c "\\copy species_locations(id, kingdom, phylum, phylum_class, family, scientific_name, genus, country, state_province, decimal_latitude, decimal_longitude) FROM '{csv_path}' DELIMITER ',' CSV HEADER;"
-        # """
-        
-        # # Execute the command using subprocess
-        # try:
-        #     subprocess.run(psql_command, shell=True, check=True)
-        #     self.stdout.write(self.style.SUCCESS('Successfully imported CSV data using psql \\copy'))
-        # except subprocess.CalledProcessError as e:
-        #     self.stdout.write(self.style.ERROR(f'Error executing psql \\copy: {e}'))
