@@ -4,7 +4,7 @@ from celery import Celery
 from django.conf import settings
 
 # TODO: change this in production
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "inhs.settings.local")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "inhs.settings.production")
 
 # name of celery instance
 app = Celery("inhs")

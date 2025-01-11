@@ -1,0 +1,125 @@
+version: "3.9"
+
+services:
+    es:
+        image: elasticsearch:7.17.9
+        environment:
+            - discovery.type=single-node
+        ports:
+            - "9200:9200"
+        networks:
+            - reverseproxy_nw
+    api: &api
+        build:
+            context: .
+            dockerfile: ./docker/production/django/Dockerfile
+        command: /start
+        image: myinhs-api
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+            - ./filtered_occurrences.csv:/tmp/filtered.csv
+        # ports:
+        #   - "8000:8000"
+        # expose:
+        #     - "8000"
+        env_file:
+            - ./.envs/.production/.django
+            - ./.envs/.production/.postgres
+        depends_on:
+            - postgres
+            - mailhog
+            - redis
+            - es
+        networks:
+            - reverseproxy_nw
+
+    postgres:
+        build:
+            context: .
+            dockerfile: ./docker/production/postgres/Dockerfile
+        image: myinhs-api-db
+        volumes:
+            - production_postgres_data:/var/lib/postgresql/data
+            - production_postgres_data_backups:/backups
+            - ./filtered_occurrences.csv:/tmp/filtered.csv
+        env_file:
+            - ./.envs/.production/.postgres
+        networks:
+            - reverseproxy_nw
+
+    mailhog:
+        image: mailhog/mailhog:v1.0.0
+        container_name: mailhog
+        ports:
+            - "8025:8025"
+        networks:
+            - reverseproxy_nw
+
+    redis:
+        image: redis:7-alpine
+        networks:
+            - reverseproxy_nw
+
+    celery_worker:
+        build:
+            context: .
+            dockerfile: ./docker/production/django/Dockerfile
+        command: /start-celeryworker
+        image: myinhs-celery-worker
+        volumes:
+            - .:/app
+        env_file:
+            - ./.envs/.production/.django
+            - ./.envs/.production/.postgres
+        depends_on:
+            - redis
+            - postgres
+            - mailhog
+        networks:
+            - reverseproxy_nw
+
+    flower:
+        build:
+            context: .
+            dockerfile: ./docker/production/django/Dockerfile
+        command: /start-flower
+        image: myinhs-flower
+        volumes:
+            - flower_data:/data
+        env_file:
+            - ./.envs/.production/.django
+            - ./.envs/.production/.postgres
+        ports:
+            - "5555:5555"
+        depends_on:
+            - redis
+            - postgres
+        networks:
+            - reverseproxy_nw
+
+    nginx:
+        restart: always
+        depends_on:
+            - api
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+        build:
+            context: ./docker/production/nginx
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        networks:
+            - reverseproxy_nw
+
+networks:
+    reverseproxy_nw:
+        external: true
+
+volumes:
+    static_volume: {}
+    media_volume: {}
+    production_postgres_data: {}
+    production_postgres_data_backups: {}
+    flower_data: {}

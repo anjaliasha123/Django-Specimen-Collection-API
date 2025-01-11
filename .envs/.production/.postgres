@@ -1,0 +1,6 @@
+POSTGRES_HOST=postgres
+POSTGRES_PORT=5432
+POSTGRES_DB=inhs
+POSTGRES_USER=myuser
+POSTGRES_PASSWORD=mypwd
+DATABASE_URL=postgres://myuser:mypwd@postgres:5432/inhs
