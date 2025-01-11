@@ -115,7 +115,7 @@ services:
 
 networks:
     reverseproxy_nw:
-        external: true
+        driver: bridge
 
 volumes:
     static_volume: {}

@@ -70,7 +70,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     "corsheaders.middleware.CorsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -193,11 +192,11 @@ CELERY_RESULT_SERIALIZER = "json"
 CELERY_RESULT_BACKEND_MAX_RETRIES = 10
 CELERY_TASK_SEND_SENT_EVENT = True
 
-# celery for data update config
-CELERY_BROKER2_URL = env("CELERY_BROKER_FOR_DATA_UPDATES")
-CELERY_RESULT_BACKEND = CELERY_BROKER2_URL
-CELERY_BROKER2_ACCEPT_CONTENT = ['json']
-CELERY_BROKER2_TASK_SERIALIZER = 'json'
+# # celery for data update config
+# CELERY_BROKER2_URL = env("CELERY_BROKER_FOR_DATA_UPDATES")
+# CELERY_RESULT_BACKEND = CELERY_BROKER2_URL
+# CELERY_BROKER2_ACCEPT_CONTENT = ['json']
+# CELERY_BROKER2_TASK_SERIALIZER = 'json'
 
 if USE_TZ:
     CELERY_TIMEZONE = TIME_ZONE

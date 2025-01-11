@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 #TODO: change to production
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'inhs.settings.local')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'inhs.settings.production')
 
 application = get_asgi_application()

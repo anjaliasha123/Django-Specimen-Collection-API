@@ -34,6 +34,7 @@ DEFAULT_FROM_EMAIL = "ajacobash@example.com"
 DOMAIN = env("DOMAIN")
 SITE_NAME = "Anna"
 
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
