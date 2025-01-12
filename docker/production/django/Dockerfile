@@ -6,7 +6,7 @@ FROM python:${PYTHON_VERSION} as python
 
 # Stage 1 - Build Dependendcy Wheels
 FROM python as python-build-stage
-ARG BUILD_ENVIRONMENT=local
+ARG BUILD_ENVIRONMENT=production
 
 RUN apt-get update && apt-get install --no-install-recommends -y \
     build-essential \
@@ -24,7 +24,7 @@ RUN apt-get update && \
 
 # Stage 2 - Run Application
 FROM python as python-run-stage
-ARG BUILD_ENVIRONMENT=local
+ARG BUILD_ENVIRONMENT=production
 
 ARG APP_HOME=/app
 
