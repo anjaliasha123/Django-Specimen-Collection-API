@@ -7,8 +7,8 @@ services:
             - discovery.type=single-node
         ports:
             - "9200:9200"
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
     api: &api
         build:
             context: .
@@ -21,8 +21,8 @@ services:
             - ./filtered_occurrences.csv:/tmp/filtered.csv
         # ports:
         #   - "8000:8000"
-        # expose:
-        #     - "8000"
+        expose:
+            - "8000"
         env_file:
             - ./.envs/.production/.django
             - ./.envs/.production/.postgres
@@ -31,8 +31,8 @@ services:
             - mailhog
             - redis
             - es
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
 
     postgres:
         build:
@@ -45,21 +45,21 @@ services:
             - ./filtered_occurrences.csv:/tmp/filtered.csv
         env_file:
             - ./.envs/.production/.postgres
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
 
     mailhog:
         image: mailhog/mailhog:v1.0.0
         container_name: mailhog
         ports:
             - "8025:8025"
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
 
     redis:
         image: redis:7-alpine
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
 
     celery_worker:
         build:
@@ -76,8 +76,8 @@ services:
             - redis
             - postgres
             - mailhog
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
 
     flower:
         build:
@@ -95,8 +95,8 @@ services:
         depends_on:
             - redis
             - postgres
-        networks:
-            - reverseproxy_nw
+        # networks:
+        #     - reverseproxy_nw
 
     nginx:
         restart: always
@@ -110,12 +110,12 @@ services:
             dockerfile: Dockerfile
         ports:
             - "8080:80"
-        networks:
-            - reverseproxy_nw
+#         networks:
+#             - reverseproxy_nw
 
-networks:
-    reverseproxy_nw:
-        external: True
+# networks:
+#     reverseproxy_nw:
+#         driver: bridge
 
 volumes:
     static_volume: {}
