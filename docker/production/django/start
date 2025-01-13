@@ -15,4 +15,5 @@ python /app/manage.py collectstatic --no-input
 >&2 echo "Importing CSV data into Postgres db..."
 python /app/manage.py import_csv
 
-exec /usr/local/bin/gunicorn inhs.wsgi --bind 0.0.0.0:1998 --chdir=/app
+# exec python /app/manage.py runserver 0.0.0.0:8000
+exec /usr/local/bin/gunicorn inhs.wsgi --bind 0.0.0.0:8000 --chdir=/app

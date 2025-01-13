@@ -13,7 +13,7 @@ ADMINS= [("Anna", "ajacobash@gmail.com")]
 CSRF_TRUSTED_ORIGINS = []
 
 SECRET_KEY = env("DJANGO_SECRET_KEY")
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS") + ["localhost"]
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS") + ["*"]
 ADMIN_URL = env("DJANGO_ADMIN_URL")
 DATABASES = {"default": env.db("DATABASE_URL")}
 SESSION_COOKIE_SECURE = True
@@ -69,5 +69,12 @@ LOGGING = {
             "level": "ERROR",
             "propagate": True,
         },
+    },
+}
+
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
