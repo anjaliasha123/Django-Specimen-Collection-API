@@ -42,4 +42,8 @@ REMEMBER: Replace 'local' with 'production' as settings configuration file in th
 - When a user updates the data, a notification is sent via email to the admin.
 - Authenticated users can add reviews or comments regarding the research work.
 
+## Architecture
+![image](https://github.com/user-attachments/assets/e5fc7423-1d76-441c-a358-be65eebbfc78)
+
+
 
