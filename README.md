@@ -45,5 +45,13 @@ REMEMBER: Replace 'local' with 'production' as settings configuration file in th
 ## Architecture
 ![image](https://github.com/user-attachments/assets/e5fc7423-1d76-441c-a358-be65eebbfc78)
 
+## App features
+- CRUD operations
+- API documentation using drf-yasg
+- Django Admin UI
+- Celery workers to send email notification 
+- Redis as message broker
+
+
 
 
