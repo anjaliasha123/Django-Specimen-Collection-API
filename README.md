@@ -2,7 +2,7 @@
 A Django based API that allows users within INHS to view a dashboard with data from the INHS biological collections (INHS-HERP) and view research articles/papers associated with each specimen. Other users can add reviews regarding the research work related to a specimen.
 
 # Data Source
-Biodiversity occurrence data published by: INHS Collections Data (accessed through the INHS Collections Data Portal, biocoll.inhs.illinois.edu/portal, 2025-01-17). <br>
+Illinois Natural History Survey - Amphibian and Reptile Collection. Occurrence dataset (ID: 4a086dbb-2b18-4ee9-a6dc-901da56c636a) https://biocoll.inhs.illinois.edu/portal/content/dwca/INHS-HERP_DwC-A.zip accessed via the INHS Collections Data Portal, biocoll.inhs.illinois.edu/portal, 2025-01-17) <br>
 https://biocoll.inhs.illinois.edu/portal/collections/misc/collprofiles.php?collid=46
 
 ## Installation
